@@ -4,6 +4,14 @@ Simplify running BusyBox
 
 This script is intended to simplify BusyBox invocation in difeerent ways.
 
+# Installation
+
+* Download the latest version of BusyBox executable from https://frippery.org/busybox/ (either 64-bit or 32-bit, what you want).
+* Download from this repository the script `bb.bat`.
+* Place both somewhere in your operating system to be visible via `$PATH`.
+
+That's it. Everything is ready. You can enjoy with the cool set of Unix tools and cute envelope for running them.
+
 # Usage
 
 ```
@@ -46,7 +54,7 @@ busybox function [function-options]
 
 ## Run an external command or script from within shell
 
-BusyBox doesn't recognize external commands even when they are in $PATH. The BusyBox's internal shell does. The following examples are identical:
+BusyBox doesn't recognize external commands even when they are in `$PATH`. The BusyBox's internal shell does. The following examples are identical:
 
 ```
 bb [shell-options] -c "command [command-options]"
@@ -56,7 +64,7 @@ bb [shell-options] -c "command [command-options]"
 busybox sh [shell-options] -c "command [command-options]"
 ```
 
-## Run a command or script found in $PATH
+## Run a command or script found in `$PATH`
 
 The previous example could be a bit simpler and more convenient, if the double quotes would have been skipped. This use case is invented for this purpose.
 
