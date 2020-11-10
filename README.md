@@ -1,12 +1,10 @@
 # busybox-runner
 
-Simplify running BusyBox
-
-This script is intended to simplify BusyBox invocation in difeerent ways.
+This script is intended to simplify BusyBox running in different ways.
 
 # Installation
 
-* Download the latest version of BusyBox executable from https://frippery.org/busybox/ (either 64-bit or 32-bit, what you want).
+* Download the latest version of the BusyBox executable from https://frippery.org/busybox/ (either 64-bit or 32-bit, what you want).
 * Download from this repository the script `bb.bat`.
 * Place both somewhere in your operating system to be visible via `$PATH`.
 
@@ -38,7 +36,7 @@ SEE ALSO
   https://github.com/rmyorston/busybox-w32
 ```
 
-## Run a built-in BusyBox function
+## 1. Run a built-in BusyBox function
 
 Run the internal function and pass options, if necessary:
 
@@ -52,7 +50,7 @@ In fact, it's the same what BusyBox does:
 busybox function [function-options]
 ```
 
-## Run an external command or script from within shell
+## 2. Run an external command or script from within shell
 
 BusyBox doesn't recognize external commands even when they are in `$PATH`. The BusyBox's internal shell does. The following examples are identical:
 
@@ -64,7 +62,7 @@ bb [shell-options] -c "command [command-options]"
 busybox sh [shell-options] -c "command [command-options]"
 ```
 
-## Run a command or script found in `$PATH`
+## 3. Run a command or script found in `$PATH`
 
 The previous example could be a bit simpler and more convenient, if the double quotes would have been skipped. This use case is invented for this purpose.
 
@@ -75,6 +73,8 @@ bb command [command-options]
 ```
 busybox sh -c "command [command-options]"
 ```
+
+If some needs require more control over script execution, you can get back to the previous use case.
 
 # See Also
 
