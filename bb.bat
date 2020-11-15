@@ -38,12 +38,12 @@ set "BB_EXE="
 for %%f in (
 	busybox.exe
 	busybox64.exe
-) do if not "%%~$PATH:f" == "" set "BB_EXE=%%~$PATH:f"
+) do if not defined BB_EXE if not "%%~$PATH:f" == "" set "BB_EXE=%%~$PATH:f"
 
 :: Look for the latest instance next to this script
 if not defined BB_EXE for /f "tokens=*" %%f in ( '
 	dir /b /o-n "%~dp0busybox*.exe" 2^>nul
-' ) do if exist "%%~f" set "BB_EXE=%~dp0%%~f"
+' ) do if not defined BB_EXE if exist "%~dp0%%~f" set "BB_EXE=%~dp0%%~f"
 
 if not defined BB_EXE (
 	2>nul echo:ERROR: BusyBox executable not found
