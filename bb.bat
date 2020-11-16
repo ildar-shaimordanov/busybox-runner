@@ -22,14 +22,6 @@
 ::   https://github.com/rmyorston/busybox-w32
 @echo off
 
-if /i "%~1" == "" (
-	"%~f0" sed -n "1 { /^::/!d; } /^::/!q; s/^:: \?//p" "%~f0"
-	if errorlevel 1 cscript //nologo //e:javascript "%~f0" < "%~f0"
-	goto :EOF
-)
-
-:: ========================================================================
-
 setlocal
 
 set "BB_EXE="
@@ -51,6 +43,11 @@ if not defined BB_EXE (
 )
 
 :: ========================================================================
+
+if /i "%~1" == "" (
+	"%BB_EXE%" sed -n "1 { /^::/!d; } /^::/!q; s/^:: \?//p" "%~f0"
+	goto :EOF
+)
 
 if /i "%~1" == "--help" (
 	"%BB_EXE%" --help
