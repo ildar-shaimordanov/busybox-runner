@@ -1,8 +1,9 @@
 :: Simplify running BusyBox
 ::
 :: USAGE
-::   Print BusyBox help page
+::   Print BusyBox help pages
 ::     bb --help
+::     bb --list[-full]
 ::
 ::   Run a built-in BusyBox function
 ::     bb function [function-options]
@@ -48,8 +49,12 @@ if /i "%~1" == "" (
 	goto :EOF
 )
 
-if /i "%~1" == "--help" (
-	"%BB_EXE%" --help
+for %%o in (
+	--help
+	--list
+	--list-full
+) do if "%~1" == "%%~o" (
+	"%BB_EXE%" %%~o
 	goto :EOF
 )
 
