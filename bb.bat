@@ -1,4 +1,3 @@
-0</* :
 :: Simplify running BusyBox
 ::
 :: USAGE
@@ -80,16 +79,3 @@ goto :EOF
 :: ========================================================================
 
 :: EOF
-
-*/0;
-
-WScript.StdOut.Write(
-WScript.StdIn.ReadAll()
-	.replace(/^(?!::).+$/m, '')		// remove the first line
-	.replace(/\n(?!::)[\s\S]+/, '\n')	// remove the rest if the file
-	.replace(/^::[ ]?/gm, '')		// remove all leading "::"
-);
-
-// ========================================================================
-
-// EOF
