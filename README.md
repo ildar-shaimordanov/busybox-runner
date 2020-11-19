@@ -16,8 +16,9 @@ That's it. Everything is ready. You can enjoy with the cool set of Unix tools an
 Simplify running BusyBox
 
 USAGE
-  Print BusyBox help page
+  Print BusyBox help pages
     bb --help
+    bb --list[-full]
 
   Run a built-in BusyBox function
     bb function [function-options]
