@@ -3,6 +3,7 @@
 :: USAGE
 ::   Print BusyBox help pages
 ::     bb --help
+::     bb --version
 ::     bb --list[-full]
 ::
 ::   Run a built-in BusyBox function
@@ -46,6 +47,11 @@ if not defined BB_EXE (
 
 if /i "%~1" == "" (
 	"%BB_EXE%" sed -n "1 { /^::/!d; } /^::/!q; s/^:: \?//p" "%~f0"
+	goto :EOF
+)
+
+if /i "%~1" == "--version" (
+	"%BB_EXE%" sh -c "busybox | head -2"
 	goto :EOF
 )
 
