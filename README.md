@@ -18,6 +18,7 @@ Simplify running BusyBox
 USAGE
   Print BusyBox help pages
     bb --help
+    bb --version
     bb --list[-full]
 
   Run a built-in BusyBox function
