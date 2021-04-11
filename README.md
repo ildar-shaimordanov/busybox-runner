@@ -30,11 +30,11 @@ USAGE
   Run a built-in BusyBox function
     bb function [function-options]
 
-  Run an external command or script from within shell
-    bb [shell-options] -c "command [command-options]"
-
   Run a command or script found in $PATH
     bb command [command-options]
+
+  Run an external command or script from within shell
+    bb [shell-options] -c "command [command-options]"
 
   Download the latest 32-bit or 64-bit build of BusyBox
     bb --download win32
@@ -62,19 +62,7 @@ In fact, it's the same what BusyBox does:
 busybox function [function-options]
 ```
 
-## 2. Run an external command or script from within shell
-
-BusyBox doesn't recognize external commands even when they are in `$PATH`. The BusyBox's internal shell does. The following examples are identical:
-
-```
-bb [shell-options] -c "command [command-options]"
-```
-
-```
-busybox sh [shell-options] -c "command [command-options]"
-```
-
-## 3. Run a command or script found in `$PATH`
+## 2. Run a command or script found in `$PATH`
 
 The previous example could be a bit simpler and more convenient, if the double quotes would have been skipped. This use case is invented for this purpose.
 
@@ -87,6 +75,18 @@ busybox sh -c "command [command-options]"
 ```
 
 If some needs require more control over script execution, you can get back to the previous use case.
+
+## 3. Run an external command or script from within shell
+
+BusyBox doesn't recognize external commands even when they are in `$PATH`. The BusyBox's internal shell does. The following examples are identical:
+
+```
+bb [shell-options] -c "command [command-options]"
+```
+
+```
+busybox sh [shell-options] -c "command [command-options]"
+```
 
 # See Also
 

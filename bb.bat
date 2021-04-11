@@ -9,11 +9,11 @@
 ::   Run a built-in BusyBox function
 ::     bb function [function-options]
 ::
-::   Run an external command or script from within shell
-::     bb [shell-options] -c "command [command-options]"
-::
 ::   Run a command or script found in $PATH
 ::     bb command [command-options]
+::
+::   Run an external command or script from within shell
+::     bb [shell-options] -c "command [command-options]"
 ::
 ::   Download the latest 32-bit or 64-bit build of BusyBox
 ::     bb --download win32
