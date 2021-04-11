@@ -42,7 +42,7 @@ if not defined BB_EXE for /f "tokens=*" %%f in ( '
 	dir /b /o-n "%~dp0busybox*.exe" 2^>nul
 ' ) do if not defined BB_EXE if exist "%~dp0%%~f" set "BB_EXE=%~dp0%%~f"
 
-if not defined BB_EXE (
+if not defined BB_EXE if /i not "%~1" == "--download" (
 	2>nul echo:ERROR: BusyBox executable not found
 	exit /b 1
 )
