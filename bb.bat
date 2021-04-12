@@ -54,7 +54,7 @@ if not defined BB_EXE if /i not "%~1" == "--download" (
 
 :: Print our usage
 if /i "%~1" == "" (
-	"%BB_EXE%" sed -n "1 { /^::/!d; } /^::/!q; s/^:: \?//p" "%~f0"
+	"%BB_EXE%" sed -n "1 { /^::/!d; }; /^::/!q; s/^:: \?//p" "%~f0"
 	goto :EOF
 )
 
