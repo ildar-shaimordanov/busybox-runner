@@ -1,4 +1,5 @@
-:: Simplify running BusyBox
+: << '____CMD____'
+:: Simplify running scripts and commands with BusyBox
 ::
 :: USAGE
 ::   Print BusyBox help pages
@@ -9,11 +10,12 @@
 ::   Run a built-in BusyBox function
 ::     bb function [function-options]
 ::
-::   Run a command or script found in $PATH
-::     bb command [command-options]
+::   Run an external command or script found in $PATH or specified with
+::   PATH (relative or absolute)
+::     bb [PATH]command [command-options]
 ::
-::   Run an external command or script from within shell
-::     bb [shell-options] -c "command [command-options]"
+::   Run a one-liner script
+::     bb [shell-options] -c "script"
 ::
 ::   Download the latest 32-bit or 64-bit build of BusyBox
 ::     bb --download win32
@@ -42,6 +44,7 @@ if not defined BB_EXE for /f "tokens=*" %%f in ( '
 	dir /b /o-n "%~dp0busybox*.exe" 2^>nul
 ' ) do if not defined BB_EXE if exist "%~dp0%%~f" set "BB_EXE=%~dp0%%~f"
 
+:: Fail, if BusyBox not found and download not required
 if not defined BB_EXE if /i not "%~1" == "--download" (
 	2>nul echo:ERROR: BusyBox executable not found
 	exit /b 1
@@ -49,16 +52,19 @@ if not defined BB_EXE if /i not "%~1" == "--download" (
 
 :: ========================================================================
 
+:: Print our usage
 if /i "%~1" == "" (
 	"%BB_EXE%" sed -n "1 { /^::/!d; } /^::/!q; s/^:: \?//p" "%~f0"
 	goto :EOF
 )
 
+:: Print BusyBox version
 if /i "%~1" == "--version" (
 	"%BB_EXE%" sh -c "busybox | head -2"
 	goto :EOF
 )
 
+:: Try to download
 if /i "%~1" == "--download" (
 	for %%p in ( "powershell.exe" ) do if "%%~$PATH:p" == "" (
 		echo:%%p is required>&2
@@ -92,6 +98,7 @@ if /i "%~1" == "--download" (
 	goto :EOF
 )
 
+:: Forward the command line options
 for %%o in (
 	--help
 	--list
@@ -114,16 +121,22 @@ set "HISTFILE=%TEMP%\.ash_history"
 
 :: ========================================================================
 
-for /f "tokens=* delims=-" %%n in ( "%~1" ) do if not "%%~$PATH:n" == "" (
-	"%BB_EXE%" sh -c "%*"
-) else if "%~1" == "%%~n" (
-	"%BB_EXE%" %*
-) else (
-	"%BB_EXE%" sh %*
-)
-
+"%BB_EXE%" sh "%~f0" %*
 goto :EOF
 
 :: ========================================================================
 
-:: EOF
+____CMD____
+
+case "$1" in
+-* | +* )
+	sh "$@"
+	;;
+* )
+	exec "$@"
+	;;
+esac
+
+# =========================================================================
+
+# EOF

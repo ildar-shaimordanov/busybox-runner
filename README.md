@@ -19,7 +19,7 @@ That's it. Everything is ready. You can enjoy with the cool set of Unix tools an
 # Usage
 
 ```
-Simplify running BusyBox
+Simplify running scripts and commands with BusyBox
 
 USAGE
   Print BusyBox help pages
@@ -30,11 +30,12 @@ USAGE
   Run a built-in BusyBox function
     bb function [function-options]
 
-  Run a command or script found in $PATH
-    bb command [command-options]
+  Run an external command or script found in $PATH or specified with
+  PATH (relative or absolute)
+    bb [PATH]command [command-options]
 
-  Run an external command or script from within shell
-    bb [shell-options] -c "command [command-options]"
+  Run a one-liner script
+    bb [shell-options] -c "script"
 
   Download the latest 32-bit or 64-bit build of BusyBox
     bb --download win32
@@ -62,9 +63,21 @@ In fact, it's the same what BusyBox does:
 busybox function [function-options]
 ```
 
-## 2. Run a command or script found in `$PATH`
+## 2. Run an external command or script
 
-The previous example could be a bit simpler and more convenient, if the double quotes would have been skipped. This use case is invented for this purpose.
+Run an external command or script found in `$PATH` or specified with a relative or absolute path. The following examples are identical:
+
+```
+bb [shell-options] [PATH]command [command-options]
+```
+
+```
+busybox [sh [shell-options]] [PATH]command [command-options]
+```
+
+## 3. Run a one-liner script
+
+Run a one-liner script as an command for `sh -c "script"`
 
 ```
 bb command [command-options]
@@ -72,20 +85,6 @@ bb command [command-options]
 
 ```
 busybox sh -c "command [command-options]"
-```
-
-If some needs require more control over script execution, you can get back to the previous use case.
-
-## 3. Run an external command or script from within shell
-
-BusyBox doesn't recognize external commands even when they are in `$PATH`. The BusyBox's internal shell does. The following examples are identical:
-
-```
-bb [shell-options] -c "command [command-options]"
-```
-
-```
-busybox sh [shell-options] -c "command [command-options]"
 ```
 
 # See Also
