@@ -12,7 +12,7 @@
 ::
 ::   Run an external command or script found in $PATH or specified with
 ::   PATH (relative or absolute)
-::     bb [PATH]command [command-options]
+::     bb [shell-options] [PATH]command [command-options]
 ::
 ::   Run a one-liner script
 ::     bb [shell-options] -c "script"

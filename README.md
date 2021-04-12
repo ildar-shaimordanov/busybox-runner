@@ -77,14 +77,14 @@ busybox [sh [shell-options]] [PATH]command [command-options]
 
 ## 3. Run a one-liner script
 
-Run a one-liner script as an command for `sh -c "script"`
+Run a one-liner script:
 
 ```
-bb command [command-options]
+bb [shell-options] -c "script"
 ```
 
 ```
-busybox sh -c "command [command-options]"
+busybox sh [shell-options] -c "script"
 ```
 
 # See Also
