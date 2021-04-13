@@ -64,14 +64,14 @@ busybox function [function-options]
 
 ## 2. Run an external command or script
 
-Run an external command or script found in `$PATH` or specified with a relative or absolute path. The following examples are identical:
+Run an external command or script found in `$PATH` or specified with a relative or absolute DIR. The following examples are identical:
 
 ```
-bb [shell-options] [PATH]command [command-options]
+bb [shell-options] [DIR]command [command-options]
 ```
 
 ```
-busybox [sh [shell-options]] [PATH]command [command-options]
+busybox [sh [shell-options]] [DIR]command [command-options]
 ```
 
 ## 3. Run a one-liner script
