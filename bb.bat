@@ -10,9 +10,8 @@
 ::   Run a built-in BusyBox function
 ::     bb function [function-options]
 ::
-::   Run an external command or script found in $PATH or specified with
-::   PATH (relative or absolute)
-::     bb [shell-options] [PATH]command [command-options]
+::   Run an executable from $PATH or specified with DIR
+::     bb [shell-options] [DIR]command [command-options]
 ::
 ::   Run a one-liner script
 ::     bb [shell-options] -c "script"
@@ -64,10 +63,22 @@ if /i "%~1" == "--version" (
 	goto :EOF
 )
 
+:: Forward the command line options
+for %%o in (
+	--help
+	--list
+	--list-full
+) do if "%~1" == "%%~o" (
+	"%BB_EXE%" %%~o
+	goto :EOF
+)
+
+:: ========================================================================
+
 :: Try to download
 if /i "%~1" == "--download" (
 	for %%p in ( "powershell.exe" ) do if "%%~$PATH:p" == "" (
-		echo:%%p is required>&2
+		>&2 echo:%%p is required
 		goto :EOF
 	)
 
@@ -81,30 +92,18 @@ if /i "%~1" == "--download" (
 		set "BB_URL=https://frippery.org/files/busybox/busybox64.exe"
 		set "BB_DST=%~dp0busybox64.exe"
 	) else (
-		echo:win32 or win64 required>&2
+		>&2 echo:win32 or win64 required
 		goto :EOF
 	)
 
-	setlocal enabledelayedexpansion
 	echo:Downloading started...
-	echo:Source = !BB_URL!
-	echo:Target = !BB_DST!
-	endlocal
+	set BB_URL
+	set BB_DST
 
 	powershell -NoLogo -NoProfile -Command "[Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12;$w=New-Object System.Net.WebClient;$w.DownloadFile($Env:BB_URL,$Env:BB_DST)"
 
 	echo:Downloading completed
 
-	goto :EOF
-)
-
-:: Forward the command line options
-for %%o in (
-	--help
-	--list
-	--list-full
-) do if "%~1" == "%%~o" (
-	"%BB_EXE%" %%~o
 	goto :EOF
 )
 
@@ -121,19 +120,26 @@ set "HISTFILE=%TEMP%\.ash_history"
 
 :: ========================================================================
 
+if defined BB_DEBUG (
+	@prompt +$S
+	@echo on
+)
+
 "%BB_EXE%" sh "%~f0" %*
-goto :EOF
+exit /b %ERRORLEVEL%
 
 :: ========================================================================
 
 ____CMD____
+
+[ -z "$BB_DEBUG" ] || set -x
 
 case "$1" in
 -* | +* )
 	sh "$@"
 	;;
 * )
-	exec "$@"
+	eval 'exec "$@"'
 	;;
 esac
 
