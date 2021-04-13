@@ -30,9 +30,8 @@ USAGE
   Run a built-in BusyBox function
     bb function [function-options]
 
-  Run an external command or script found in $PATH or specified with
-  PATH (relative or absolute)
-    bb [PATH]command [command-options]
+  Run an executable from $PATH or specified with DIR
+    bb [shell-options] [DIR]command [command-options]
 
   Run a one-liner script
     bb [shell-options] -c "script"
