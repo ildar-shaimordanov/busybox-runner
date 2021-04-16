@@ -1,4 +1,4 @@
-: << '____CMD____'
+: ; [ $# -gt 0 ] || exec sed -n "s/^:: \?//p" << '::::'
 :: Simplify running scripts and commands with BusyBox
 ::
 :: USAGE
@@ -26,6 +26,8 @@
 ::   https://busybox.net/
 ::   https://frippery.org/busybox/
 ::   https://github.com/rmyorston/busybox-w32
+::::
+: << '____CMD____'
 @echo off
 
 setlocal
@@ -47,30 +49,6 @@ if not defined BB_EXE for /f "tokens=*" %%f in ( '
 if not defined BB_EXE if /i not "%~1" == "--download" (
 	2>nul echo:ERROR: BusyBox executable not found
 	exit /b 1
-)
-
-:: ========================================================================
-
-:: Print our usage
-if /i "%~1" == "" (
-	"%BB_EXE%" sed -n "1 { /^::/!d; }; /^::/!q; s/^:: \?//p" "%~f0"
-	goto :EOF
-)
-
-:: Print BusyBox version
-if /i "%~1" == "--version" (
-	"%BB_EXE%" sh -c "busybox | head -2"
-	goto :EOF
-)
-
-:: Forward the command line options
-for %%o in (
-	--help
-	--list
-	--list-full
-) do if "%~1" == "%%~o" (
-	"%BB_EXE%" %%~o
-	goto :EOF
 )
 
 :: ========================================================================
@@ -131,6 +109,21 @@ exit /b %ERRORLEVEL%
 :: ========================================================================
 
 ____CMD____
+
+case "$1" in
+'' )
+	# It's never reachable part - learn why at the top of the script
+	exit
+	;;
+--help | --list | --list-full )
+	busybox $1
+	exit
+	;;
+--version )
+	busybox --help | head -2
+	exit
+	;;
+esac
 
 [ -z "$BB_DEBUG" ] || set -x
 
