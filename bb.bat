@@ -125,6 +125,10 @@ case "$1" in
 	;;
 esac
 
+# Add the BusyBox location to the $PATH
+[[ ";$PATH;" =~ ";$( dirname "$0" );;" ]] \
+|| PATH="$( dirname "$0" );$PATH"
+
 [ -z "$BB_DEBUG" ] || set -x
 
 case "$1" in
