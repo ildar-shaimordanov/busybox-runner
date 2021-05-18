@@ -13,9 +13,13 @@
 # =========================================================================
 
 clp() {
-	if [ "$1" = "-h" ]
+	if [ "$1" = "-h" -o "$1" = "--help" ]
 	then
-		echo "Usage: [ clp | ] ... [ | clp ]"
+		cat <<-HELP
+		Usage: [ clp | ] ... [ | clp ]
+
+		Copy data from and/or to the clipboard
+		HELP
 		return
 	fi
 
