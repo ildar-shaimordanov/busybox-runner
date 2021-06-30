@@ -10,28 +10,42 @@
 # Do something with data and keep in the clipboard
 # ... | clp
 #
+# Convert with help of dos2unix and unix2dos enabled
+#
 # =========================================================================
 
 clp() {
 	if [ "$1" = "-h" -o "$1" = "--help" ]
 	then
-		cat <<-HELP
-		Usage: [ clp | ] ... [ | clp ]
+		cat <<HELP
+Usage: [ clp [-u|-d] | ] ... [ | clp [-u|-d] ]
 
-		Copy data from and/or to the clipboard
-		HELP
+Copy data from and/or to the clipboard
+
+	-u	dos2unix
+	-d	unix2dos
+HELP
 		return
 	fi
 
 	if [ ! -t 0 ]
 	then
 		# ... | clp
-		clip
+		case "$1" in
+		-u ) dos2unix ;;
+		-d ) unix2dos ;;
+		*  ) cat - ;;
+		esac | clip
 	else
 		# clp | ...
 		# or simply output the clipboard
 		powershell -NoLogo -NoProfile -Command \
-		'Get-Clipboard -Raw | Write-Host -NoNewLine'
+		'Get-Clipboard -Raw | Write-Host -NoNewLine' \
+		| case "$1" in
+		-u ) dos2unix ;;
+		-d ) unix2dos ;;
+		*  ) cat - ;;
+		esac
 	fi
 
 }
