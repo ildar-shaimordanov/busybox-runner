@@ -35,7 +35,7 @@ clp() {
 		# EOL even the last line is not terminated by EOL. It's
 		# out of our power to change it because of sed design.
 		powershell -NoLogo -NoProfile -Command Get-Clipboard \
-		| sed '$ { /^\r*$/d }'
+		| sed -b '$ { /^\r*$/d }'
 	fi
 
 }
