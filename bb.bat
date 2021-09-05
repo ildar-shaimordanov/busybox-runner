@@ -34,10 +34,16 @@ setlocal
 
 set "BB_EXE="
 
-:: Look for the latest instance next to this script
+:: First: look for the latest instance next to this script
 if not defined BB_EXE for /f "tokens=*" %%f in ( '
 	dir /b /o-n "%~dp0busybox*.exe" 2^>nul
 ' ) do if not defined BB_EXE if exist "%~dp0%%~f" set "BB_EXE=%~dp0%%~f"
+
+:: Second: look for the instance in $PATH
+for %%f in (
+	busybox.exe
+	busybox64.exe
+) do if not defined BB_EXE if not "%%~$PATH:f" == "" set "BB_EXE=%%~$PATH:f"
 
 :: Fail, if BusyBox not found and download not required
 if not defined BB_EXE if /i not "%~1" == "--download" (
