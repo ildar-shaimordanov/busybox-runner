@@ -1,3 +1,6 @@
+# Freeze this repository in favor of another one.
+# All this content is migrated to https://github.com/ildar-shaimordanov/my-scripts.
+
 # busybox-runner
 
 This script is intended to simplify BusyBox running in different ways.
